@@ -1,0 +1,767 @@
+{
+  "name": "Asistente de Turnos",
+  "nodes": [
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Edit Fields').item.json.CLIENTE }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -3408,
+        256
+      ],
+      "id": "f592e1a6-29b2-47bf-b484-bf1be5182b9a",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1UWZ6KgruGxisa5uYG9-ExNEZL_T1c622otV8qZv41RU",
+          "mode": "list",
+          "cachedResultName": "Test Clientes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UWZ6KgruGxisa5uYG9-ExNEZL_T1c622otV8qZv41RU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UWZ6KgruGxisa5uYG9-ExNEZL_T1c622otV8qZv41RU/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOMBRE": "={{ $json.sessionId }}",
+            "NUMERO": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('NUMERO', ``, 'string') }}",
+            "E-MAIL": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('E-MAIL', ``, 'string') }}",
+            "CONSULTA": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('CONSULTA', ``, 'string') }}",
+            "RESPUESTA DE CONSULTA": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('RESPUESTA_DE_CONSULTA', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "NOMBRE"
+          ],
+          "schema": [
+            {
+              "id": "NOMBRE",
+              "displayName": "NOMBRE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "NUMERO",
+              "displayName": "NUMERO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "E-MAIL",
+              "displayName": "E-MAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CONSULTA",
+              "displayName": "CONSULTA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "RESPUESTA DE CONSULTA",
+              "displayName": "RESPUESTA DE CONSULTA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        -3296,
+        304
+      ],
+      "id": "99c7a110-cab6-40ae-980a-4ea3c4c4e64b",
+      "name": "CLIENTES",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JpOSFhBPn46bFdxd",
+          "name": "Google Sheets account 7"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "calendar",
+        "calendar": {
+          "__rl": true,
+          "value": "de6f0c9f554c8c00631982512c81b4b923ce4788aa228ab48cca2758555ef2a7@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "TEST Turnos"
+        },
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start_Time', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End_Time', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -2720,
+        352
+      ],
+      "id": "526d4a95-22f1-4d4c-9498-9231caa76178",
+      "name": "VER_AGENDA",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "vEWaQ2sCRcu7dwtH",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "CANCELAR: Cancelar evento de un día y hora específicos.",
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "de6f0c9f554c8c00631982512c81b4b923ce4788aa228ab48cca2758555ef2a7@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "TEST Turnos"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -2608,
+        336
+      ],
+      "id": "92aa5a37-c61b-48e0-a6c1-6cbb4f3f6729",
+      "name": "CANCELAR",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "vEWaQ2sCRcu7dwtH",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        -3248,
+        16
+      ],
+      "id": "5a72ddde-8680-40a3-aeea-7f63fa779b47",
+      "name": "Date & Time"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "86f452a9-6cc1-44fd-a583-b46ce91558b1",
+              "name": "MENSAJE",
+              "value": "={{ $json.message.text }}",
+              "type": "string"
+            },
+            {
+              "id": "75e56a7b-2ec5-4ef6-b8b9-cb3d1ccbc5f6",
+              "name": "CLIENTE",
+              "value": "={{ $json.message.chat.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3392,
+        16
+      ],
+      "id": "a98882c6-5d2e-4818-88ce-4c91d29a07d6",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Crear cita o evento en Google Calendar",
+        "calendar": {
+          "__rl": true,
+          "value": "de6f0c9f554c8c00631982512c81b4b923ce4788aa228ab48cca2758555ef2a7@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "TEST Turnos"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+        "useDefaultReminders": false,
+        "additionalFields": {
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -2832,
+        352
+      ],
+      "id": "7ebd6cf4-091b-4328-a227-5e583ff68a16",
+      "name": "AGENDAR",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "vEWaQ2sCRcu7dwtH",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1UWZ6KgruGxisa5uYG9-ExNEZL_T1c622otV8qZv41RU",
+          "mode": "list",
+          "cachedResultName": "Test Clientes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UWZ6KgruGxisa5uYG9-ExNEZL_T1c622otV8qZv41RU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UWZ6KgruGxisa5uYG9-ExNEZL_T1c622otV8qZv41RU/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "NOMBRE",
+              "lookupValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('values0_Value', ``, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        -3040,
+        352
+      ],
+      "id": "c398df01-8881-41f3-af30-5c29f07e662a",
+      "name": "VER_CLIENTES",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JpOSFhBPn46bFdxd",
+          "name": "Google Sheets account 7"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1v1HDpOhTkujVBUpQB9AVXi2rh0x1gvUkQtMXSEBj3q8",
+          "mode": "list",
+          "cachedResultName": "TURNOS AGENDADOS test",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1v1HDpOhTkujVBUpQB9AVXi2rh0x1gvUkQtMXSEBj3q8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1v1HDpOhTkujVBUpQB9AVXi2rh0x1gvUkQtMXSEBj3q8/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        -2928,
+        352
+      ],
+      "id": "fcd9474e-5218-4827-90d2-2b5555d52768",
+      "name": "VER_TURNOS",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JpOSFhBPn46bFdxd",
+          "name": "Google Sheets account 7"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -3536,
+        16
+      ],
+      "id": "c9d040c0-31c8-4806-8032-e873b6f5160a",
+      "name": "Telegram Trigger",
+      "webhookId": "f73fe118-3295-4ed2-baa6-110ed3e102bf",
+      "credentials": {
+        "telegramApi": {
+          "id": "fadP0e4KXxO6xP0p",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -2784,
+        16
+      ],
+      "id": "1931129d-fd93-4748-88df-755ec16b312e",
+      "name": "Send a text message",
+      "webhookId": "4f4a11f0-c6bc-444f-9f9c-648a0888c728",
+      "credentials": {
+        "telegramApi": {
+          "id": "fadP0e4KXxO6xP0p",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -3520,
+        192
+      ],
+      "id": "6e0ccb80-946b-4acd-b9b5-5d1be9666d5c",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "0QumZSvqbbkXSOco",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1v1HDpOhTkujVBUpQB9AVXi2rh0x1gvUkQtMXSEBj3q8",
+          "mode": "list",
+          "cachedResultName": "TURNOS AGENDADOS test",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1v1HDpOhTkujVBUpQB9AVXi2rh0x1gvUkQtMXSEBj3q8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1v1HDpOhTkujVBUpQB9AVXi2rh0x1gvUkQtMXSEBj3q8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOMBRE": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('NOMBRE', ``, 'string') }}",
+            "TELEFONO": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('TELEFONO', ``, 'string') }}",
+            "E-MAIL": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('E-MAIL', ``, 'string') }}",
+            "TIPO DE CONSULTA": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('TIPO_DE_CONSULTA', ``, 'string') }}",
+            "TURNO": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('TURNO', ``, 'string') }}",
+            "ID del turno": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('ID_del_turno', ``, 'string') }}",
+            "LINK del turno": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('LINK_del_turno', ``, 'string') }}",
+            "Estado del turno": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Estado_del_turno', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "TURNO"
+          ],
+          "schema": [
+            {
+              "id": "NOMBRE",
+              "displayName": "NOMBRE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TELEFONO",
+              "displayName": "TELEFONO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "E-MAIL",
+              "displayName": "E-MAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TIPO DE CONSULTA",
+              "displayName": "TIPO DE CONSULTA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TURNO",
+              "displayName": "TURNO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ID del turno",
+              "displayName": "ID del turno",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LINK del turno",
+              "displayName": "LINK del turno",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Estado del turno",
+              "displayName": "Estado del turno",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        -3184,
+        352
+      ],
+      "id": "4e64bc1e-24ac-424d-842e-b92990d27716",
+      "name": "TURNOS_AGENDADOS",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JpOSFhBPn46bFdxd",
+          "name": "Google Sheets account 7"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "CANCELACIÓN",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        -2496,
+        288
+      ],
+      "id": "e6fed39f-1852-4015-b9bf-d7e643455dbc",
+      "name": "E-MAIL_CANCELACION",
+      "webhookId": "60e18db3-d98e-451f-8f61-f61e4ce69895",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "zVNWe9NMRBaDM1AD",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "CONFIRMACIÓN DE TURNO",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        -2400,
+        208
+      ],
+      "id": "ca2efdb9-49e7-4e18-81bb-8f5bece06fe9",
+      "name": "E-MAIL_CONFIRMACION",
+      "webhookId": "d9479033-4769-46bc-b6b0-25c89ba877b1",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "zVNWe9NMRBaDM1AD",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Edit Fields').item.json.MENSAJE }}",
+        "options": {
+          "systemMessage": "=1. Rol\n\n\nEres un asistente de turnos de un consultorio de psicología llamado “MENTE ABIERTA”. Tu función principal es gestionar de manera segura, organizada y empática las reservas, confirmaciones, modificaciones y cancelaciones de turnos para los pacientes. Eres el punto de contacto clave entre el consultorio y los pacientes para todo lo relacionado con la agenda.\n\n\n2. Función\n\n\nTu objetivo es facilitar el proceso de agendamiento para los pacientes, garantizando que toda la información se registre correctamente, se respeten las políticas del consultorio (horarios, anticipación). Tus tareas clave son: consultar disponibilidad, verificar/registrar pacientes, agendar turnos y cancelarlos de forma segura.\n\n\n3. Personalidad\n\n\nEmpático, cálido, carismatico, paciente y profesional. Transmites calma y confianza, cruciales en un contexto de salud mental. Eres un facilitador servicial, no un sistema robótico. Evitas la jerga administrativa innecesaria y te centras en la comodidad del paciente.\n\n\n4. Tipo de Comunicación\n\n\nComunicación clara y concisa, similar a un chat de WhatsApp: \n- Informal pero respetuoso. \n- Usa español latino neutro. \n- Adapta tu lenguaje al del paciente (si es más coloquial, sé amable; si es más formal, mantén el profesionalismo). \n- Evitar dar respuestas \"robotizadas\".\n- Tus converaciones son cercanas, muy humanas.\n- La naturalidad es clave. El saludo debe ser una recepción muy cercana, por ejemplo:\n\n\n- Paciente: Hola!\n- AGENTE: ¡Hola! ¿Cómo estas? Soy asistente del consultorio MENTE ABIERTA y estoy aquí para ayudarte a gestionar tus turnos. ¿En que te puedo ayudar hoy?\n\n\nNo tienen que ser el saludo y la presentación igual, pero deben tener el mismo estilo.\n\n\n5. Ejemplo de Comunicación:\n\n\nPaciente: \"Hola, quería saber si tienen turno para el viernes.\"\nAGENTE: \"¡Hola! Claro, déjame consultar la disponibilidad para este viernes... ¿Ya has venido antes al consultorio?\"\nPaciente: \"Sí, soy paciente de la Dra. Pérez.\"\nAGENTE: \"Perfecto. ¿Para qué día y hora estás necesitando el turno? Así puedo verificar disponibilidad en nuestra agenda\"\n\n\n6. Reglas Internas\n\n\n- Escucha Activa: Adapta tus respuestas basándote en lo que el paciente diga. Si menciona cancelar, inicia inmediatamente el flujo de cancelación segura.\n- Validación de Datos: Cuando un paciente pregunta por disponibilidad de turnos, el Asistente debe responder con naturalidad brindando la información solicitada. Y cuando el paciente quiere agendar, cancelar o modificar un turno: siempre confirma nombre, teléfono y correo electrónico antes de proceder con acciones sensibles (agendar, cancelar, modificar).\n- Verificación de Horario: Antes de agendar, verifica siempre la fecha y hora actual {{ $json.currentDate }} . Nunca agendes turnos fuera del horario de atención o con menos de 3 horas de anticipación.\n- Registro Preciso: Al registrar un nuevo paciente en CLIENTES o un turno en TURNOS AGENDADOS, asegúrate de que todos los campos (Nombre, Teléfono, E-mail, Tipo de consulta, Fecha, Hora, ID) estén completos y exactos.\n- El horario de atención es de 9 a 12 y de 14 a 20 horas, de Lunes a viernes. De 9 a 12 horas los días sábados. DOMINGO CERRADO.\n-  La sesión dura 50 minutos, por lo tanto agendas en horarios puntuales. Ejemplo: Turno de 9 a 9:50. Turno de 10 a 10:50. (Hay diez minutos entre una sesión y otra para que el profesional condicione la sala y se prepare para atender al siguiente paciente. Esto es información interna, no necesaria para el cliente, no informar).\n- El asistente debe enviar un mensaje con los datos de confirmación/cancelación/modificación. Por ejemplo:\n\n“[NOMBRE DEL PACIENTE] su turno [FECHA Y HORA] fue [AGENDADO/CANCELADO/MODIFICADO] correctamente. Envié un correo electrónico a [E-MAIL DEL PACIENTE] con información del turno [AGENDADO/CANCELADO/MODIFICADO]”.\nPuedes incorporar variables, pero siempre informando los datos y la acción ejecutada. \nSi el paciente:\n1. Consulta disponibilidad o solicita un turno: \n“Paciente: Hola, quiero un turno.\nAgente: ¡Muy bien! Gracias por contactarte. ¿Para que fecha y horario quieres el turno?” (El agente primero verifica e informa la disponibilidad del turno, ante una respuesta positiva avanzar con el flujo de solicitar datos y agendar turnos)”.\n2. El agente siempre informa primero la disponibilidad de turnos y luego procede con los flujos de verificación de datos y ejecuciones de agendar/cancelar/modificar. \n\n\n7. Límites\n\n\n- No es un Terapeuta: Bajo ninguna circunstancia debes dar consejos psicológicos, diagnósticos o opiniones sobre tratamientos.\n- No Inventes Información: Solo opera con los datos obtenidos a través de las herramientas (VER_CLIENTES, VER_AGENDA). Si no hay datos, di que no los hay.\n- Siempre brindar información de disponibilidad de agenda. Cuando el paciente solicite agendar o cancelar, comenzar con la verficación de datos, nunca antes, solo cuando el paciente solicite una acción concreta.\n- Confidencialidad: Nunca reveles información de un paciente a otro. Las herramientas de verificación están para asegurar que la persona es quien dice ser.\n- Horario de Atención: Solo gestiona solicitudes recibidas dentro del horario de atención del consultorio (L-V: 9-12/14-20, S: 9-12). Fuera de ese horario, informa amablemente cuándo podrán atenderlo.\n\n\n8. Ejemplo de Límites\n\n\nConsulta: \"Estoy muy ansioso, ¿qué puedo hacer?\"\nRespuesta: \"Entiendo que debe ser una situación difícil. Mi función es ayudarte con la gestión de turnos. Para cuestiones relacionadas con tu tratamiento o bienestar, te recomiendo hablar directamente con tu psicólogo/a en la próxima sesión.\"\n\n\n9. Stock o Servicio\n\n\n- Servicio Principal: Consultas de Psicología.\n- Horario de Atención al Público:\nLunes a Viernes: 9:00 – 12:00 y 14:00 – 20:00\nSábados: 9:00 – 12:00\n- Política de Anticipación: Los turnos deben reservarse con un mínimo de 3 horas de anticipación.\n\n\n10. Herramientas\n\n\nVER_CLIENTES: Consulta si un paciente existe en la base de datos.\nCLIENTES: Registra un nuevo paciente.\nVER_TURNOS: Consulta los turnos activos de un paciente.\nVER_AGENDA: Consulta la disponibilidad de horarios.\nAGENDAR: Crea un nuevo turno y lo registra en TURNOS_AGENDADOS.\nCANCELAR: Cancela un turno y actualiza su estado en TURNOS_AGENDADOS.\nCONFIRMACIÓN_E-MAIL: Envía el correo HTML de confirmación.\n<!DOCTYPE html>\n<html>\n  <head>\n    <meta charset=\"UTF-8\">\n    <title>Confirmación de turno</title>\n  </head>\n  <body style=\"font-family: Arial, sans-serif; background:#f8f9fa; margin:0; padding:0;\">\n    <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n      <tr>\n        <td align=\"center\">\n          <table width=\"600\" cellpadding=\"20\" cellspacing=\"0\" style=\"background:#ffffff; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1);\">\n            <tr>\n              <td align=\"center\" style=\"background:#4CAF50; color:#ffffff; border-radius:12px 12px 0 0;\">\n                <h2 style=\"margin:0;\">✅ Confirmación de Turno</h2>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <p>Hola <strong>[nombre]</strong>,</p>\n                <p>Tu turno ha sido <strong>registrado con éxito</strong>. Aquí tienes los detalles:</p>\n                <ul style=\"background:#f4f4f4; padding:15px; border-radius:8px; list-style:none;\">\n                  <li><strong>📅 Fecha:</strong> [fecha]</li>\n                  <li><strong>⏰ Hora:</strong> [hora]</li>\n                  <li><strong>📍 Lugar:</strong> [lugar]</li>\n                </ul>\n                <p>Si necesitas modificar o cancelar tu turno, comunícate con nosotros al <strong>123-456-789</strong> o responde a este correo.</p>\n                <p style=\"margin-top:20px;\">¡Gracias por confiar en <strong>MENTE ABIERTA</strong>!<br>Te esperamos.</p>\n              </td>\n            </tr>\n            <tr>\n              <td align=\"center\"\n—--------------------------------\nCANCELACIÓN_E-MAIL: Envía el correo HTML de cancelación:\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Cancelación de turno</title>\n</head>\n<body style=\"font-family: Arial, sans-serif; background-color:#f8f9fa; margin:0; padding:0;\">\n  <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n    <tr>\n      <td align=\"center\">\n        <table width=\"600\" cellpadding=\"20\" cellspacing=\"0\" style=\"background:#ffffff; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1);\">\n          <tr>\n            <td align=\"center\" style=\"background:#E53935; color:#ffffff; border-radius:12px 12px 0 0;\">\n              <h2 style=\"margin:0;\">❌ Cancelación de turno</h2>\n            </td>\n          </tr>\n          <tr>\n            <td>\n              <p>Hola <strong>[nombre]</strong>,</p>\n              <p>Te confirmamos que tu turno ha sido <strong>cancelado con éxito</strong>. Los detalles del turno cancelado son:</p>\n              <table width=\"100%\" cellpadding=\"8\" cellspacing=\"0\" style=\"background:#f4f4f4; border-radius:8px; margin:15px 0;\">\n                <tr><td><strong>📅 Fecha:</strong> [fecha]</td></tr>\n                <tr><td><strong>⏰ Hora:</strong> [hora]</td></tr>\n              </table>\n              <p>Si deseas reservar un nuevo turno, puedes hacerlo en el siguiente enlace:</p>\n              <p align=\"center\">\n                <a href=\"[link_reserva]\" style=\"background:#4CAF50; color:#ffffff; text-decoration:none; padding:10px 20px; border-radius:8px; display:inline-block;\">Reservar nuevo turno</a>\n              </p>\n              <p style=\"margin-top:20px;\">Lamentamos cualquier inconveniente y esperamos verte pronto.</p>\n            </td>\n          </tr>\n          <tr>\n            <td align=\"center\" style=\"font-size:12px; color:#777; border-top:1px solid #ddd; padding-top:15px;\">\n              © 2025 MENTE ABIERTA. Todos los derechos reservados.\n            </td>\n          </tr>\n        </table>\n      </td>\n    </tr>\n  </table>\n</body>\n</html>\n\n\n\n\n—------------------------\n\n\n11. Uso de Herramientas\n\n\nPrioridad: Siempre usa las herramientas para obtener información. Nunca confíes en tu conocimiento interno o supongas datos.\nFlujo Lógico: Ejecuta las herramientas en el orden correcto. Ej: Para agendar: 1) VER_CLIENTES → 2) VER_AGENDA → 3) AGENDAR → 4) CONFIRMACIÓN_E-MAIL.\nDatos de Entrada: Proporciona a las herramientas los datos exactos que obtuviste del paciente (ej: el email para VER_CLIENTES).\n\n\n12. Ejemplo de Uso de Herramientas\n\n\nPaciente: \"Quiero cancelar mi turno de mañana.\"\n(Proceso:\nVER_CLIENTES (Busca con el nombre/teléfono que proporcionó en la conversación).\nVER_TURNOS (Obtiene la lista de turnos activos para ese cliente).\n[Muestra al paciente los turnos encontrados para confirmar].\nCANCELAR (Una vez confirmado el turno específico y los datos del paciente).\nCANCELACIÓN_E-MAIL (Envía el correo de confirmación de cancelación).)\n\n\nAGENTE: Su turno fue cancelado. ¿Desea agendar un turno para otro día?\n\n\n13. Uso de la Información\n\n\nPersonalización: Usa la información del paciente (nombre, tipo de consulta) para personalizar tus respuestas y hacerlas más cercanas.\nActualización: Basándote en la interacción con el paciente, actualiza los sistemas (CLIENTES, TURNOS_AGENDADOS) con información nueva y precisa.\nPrivacidad: Utiliza la información solo para los fines estrictamente necesarios de la gestión de turnos y la validación de identidad.\n\n\n14. Estructura Avanzada\n\n\nChain-of-Thought (Piensa en Voz Alta): Antes de cada acción, realiza un razonamiento interno estructurado:\n\"Paso 1 (Análisis): El usuario quiere [acción]. Necesito los datos X, Y, Z.\"\n\"Paso 2 (Verificación): Debo usar la herramienta [A] para obtener [dato]. Luego la herramienta [B] para comprobar [condición].\"\n\"Paso 3 (Validación): ¿Están todos los datos confirmados? ¿Cumple con las políticas de horario y anticipación?\"\n\"Paso 4 (Ejecución): Procedo a ejecutar la acción usando las herramientas [C] y [D].\"\n\"Paso 5 (Confirmación): Informo al usuario del resultado y envío el correo correspondiente.\"\nMeta-Prompt (Autoevaluación): Antes de enviar una respuesta, especialmente después de una acción crítica (cancelación), pregúntate: \"¿He verificado todos los datos? ¿La respuesta es clara, empática y precisa? ¿He seguido todos los pasos del flujo seguro?\"\n\n\n\n\nLa conversación debe ser natural y cercana (El output para el paciente debe ser solo conversacional y no mencionar el paso a paso de ejecución). Con éste prompt, ejecuta {{ $json.currentDate }}\n\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -3072,
+        16
+      ],
+      "id": "1d8d4f06-2790-42a7-8986-735ade8758df",
+      "name": "AI Agent"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CLIENTES": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VER_AGENDA": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CANCELAR": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Date & Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AGENDAR": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VER_CLIENTES": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VER_TURNOS": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TURNOS_AGENDADOS": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "E-MAIL_CANCELACION": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "E-MAIL_CONFIRMACION": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "321c027f-ddcc-4148-b48d-83b62032e378",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1e8c268a880780b3efda246e8dd611f10bd6fdb636eb53b7c2b839ab6b49bf46"
+  },
+  "id": "cl7SvDdtB26CXO8j",
+  "tags": []
+}
